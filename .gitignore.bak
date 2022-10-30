@@ -5,7 +5,8 @@
 # UNREAL ENGINE .gitignore starts here
 # ===================================================
 # we do not need to version control the Starter Content
-Content/AssetsvilleTown/*
+Content/MOUT_Arabian/*
+
 
 # Visual Studio 2015 user specific files
 .vs/

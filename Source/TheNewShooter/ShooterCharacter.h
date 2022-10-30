@@ -28,6 +28,7 @@ public:
 
 private:
 
+
 	// Axis Map Functions
 	void MoveForward( float MoveValue );
 	void MoveRight( float MoveValue );
