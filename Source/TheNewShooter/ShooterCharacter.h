@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "ShooterCharacter.generated.h"
 
+//class AGunActor; // forward declare
+
 UCLASS()
 class THENEWSHOOTER_API AShooterCharacter : public ACharacter
 {
@@ -28,6 +30,7 @@ public:
 
 private:
  
+	class AGunActor* GunSpawn;
 
 	// Axis Map Functions
 	void MoveForward( float MoveValue );
@@ -35,6 +38,8 @@ private:
 	void LookUp( float MoveValue );
 	void LookSides( float MoveValue );
 
-	//Action Map Functions
-	//Jump is called Directly from the parent class
+	UPROPERTY(EditAnywhere )
+	TSubclassOf<AGunActor> GunBPClass;
+
+	void PlayerShoot( );
 };

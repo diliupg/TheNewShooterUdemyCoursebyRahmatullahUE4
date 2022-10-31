@@ -2,6 +2,7 @@
 
 
 #include "ShooterCharacter.h"
+#include "GunActor.h"
 
 // Sets default values
 AShooterCharacter::AShooterCharacter()
@@ -16,6 +17,10 @@ void AShooterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	GunSpawn = GetWorld( )->SpawnActor<AGunActor>( GunBPClass );
+	GunSpawn->AttachToComponent( GetMesh( ), FAttachmentTransformRules::KeepRelativeTransform, TEXT( "GunSocket_r" ) );
+
+	GunSpawn->SetOwner( this );
 }
 
 // Called every frame
@@ -38,6 +43,7 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	//Bind Action control
 	PlayerInputComponent->BindAction( TEXT( "Jump" ), EInputEvent::IE_Pressed, this, &ACharacter::Jump );
+	PlayerInputComponent->BindAction( TEXT( "Shoot" ), EInputEvent::IE_Pressed, this, &AShooterCharacter::PlayerShoot );
 }
 
 void AShooterCharacter::MoveForward( float MoveValue )
@@ -59,4 +65,9 @@ void AShooterCharacter::LookUp( float MoveValue )
 void AShooterCharacter::LookSides( float MoveValue )
 {
 	AddControllerYawInput( MoveValue );
+}
+
+void AShooterCharacter::PlayerShoot( )
+{
+	GunSpawn->GunShoot( );
 }
