@@ -27,7 +27,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
-
+ 
 
 	// Axis Map Functions
 	void MoveForward( float MoveValue );
