@@ -31,6 +31,9 @@ private:
 	UPROPERTY(EditAnywhere )
 	class UParticleSystem* GunFireEffect;
 
+	UPROPERTY( EditAnywhere )
+	class UParticleSystem* ImpactEffect;
+
 	UPROPERTY(EditDefaultsOnly )
 	float EndLocationDistance;
 

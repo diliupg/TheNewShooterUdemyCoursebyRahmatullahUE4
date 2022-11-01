@@ -53,7 +53,8 @@ void AGunActor::GunShoot( )
 
 	if ( bDone )
 	{
-		DrawDebugPoint( GetWorld( ), Hit.Location, 30.f, FColor::Green, true );
+		FVector ShotDirection = -Rotation.Vector( );
+		UGameplayStatics::SpawnEmitterAtLocation( GetWorld( ), ImpactEffect, Hit.Location, ShotDirection.Rotation( ) );
 	}
 
 
