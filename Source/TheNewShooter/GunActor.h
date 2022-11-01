@@ -28,6 +28,12 @@ private:
 	UPROPERTY(EditAnywhere )
 	class USkeletalMeshComponent* Gun;
 
+	UPROPERTY(EditAnywhere )
+	class UParticleSystem* GunFireEffect;
+
+	UPROPERTY(EditDefaultsOnly )
+	float EndLocationDistance;
+
 public:
 
 	void GunShoot( );
