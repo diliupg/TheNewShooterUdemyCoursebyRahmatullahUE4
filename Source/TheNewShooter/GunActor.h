@@ -15,6 +15,7 @@ public:
 	// Sets default values for this actor's properties
 	AGunActor();
 
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -34,8 +35,14 @@ private:
 	UPROPERTY( EditAnywhere )
 	class UParticleSystem* ImpactEffect;
 
+	UPROPERTY(EditAnywhere )
+	class USoundBase* MachineGunFire;
+
 	UPROPERTY(EditDefaultsOnly )
 	float EndLocationDistance;
+
+	UPROPERTY( EditDefaultsOnly )
+	float DamageAmount;
 
 public:
 

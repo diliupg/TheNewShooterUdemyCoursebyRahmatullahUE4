@@ -5,10 +5,12 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
+#include "Sound/SoundCue.h"
 
 // Sets default values
 AGunActor::AGunActor() :
-	EndLocationDistance(5000.f )
+	EndLocationDistance(5000.f ),
+	DamageAmount(10.f )
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -33,6 +35,7 @@ void AGunActor::Tick(float DeltaTime)
 
 void AGunActor::GunShoot( )
 {
+	UGameplayStatics::SpawnSound2D( GetWorld(), MachineGunFire);
 	UGameplayStatics::SpawnEmitterAttached( GunFireEffect, Gun, TEXT( "MuzzleFlash" ) );
 
 	APawn* OwnerPawn = Cast<APawn>( GetOwner( ) );
@@ -55,6 +58,14 @@ void AGunActor::GunShoot( )
 	{
 		FVector ShotDirection = -Rotation.Vector( );
 		UGameplayStatics::SpawnEmitterAtLocation( GetWorld( ), ImpactEffect, Hit.Location, ShotDirection.Rotation( ) );
+
+		FPointDamageEvent DamageEvent( DamageAmount, Hit, ShotDirection, nullptr );
+
+		AActor* HitActor = Hit.GetActor( );
+		if ( HitActor != nullptr )
+		{
+			HitActor->TakeDamage( DamageAmount, DamageEvent, OwnerController, this );
+		}
 	}
 
 

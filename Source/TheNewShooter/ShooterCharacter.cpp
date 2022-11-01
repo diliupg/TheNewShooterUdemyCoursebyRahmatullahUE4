@@ -3,13 +3,27 @@
 
 #include "ShooterCharacter.h"
 #include "GunActor.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values
-AShooterCharacter::AShooterCharacter()
+AShooterCharacter::AShooterCharacter() :
+	MaxHealth(100.f ),
+	CurrentHealth(MaxHealth )
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+}
+
+float AShooterCharacter::TakeDamage( float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser )
+{
+	float AppliedDamage = Super::TakeDamage( DamageAmount, DamageEvent, EventInstigator, DamageCauser );
+	AppliedDamage = FMath::Min( CurrentHealth, AppliedDamage );
+
+	CurrentHealth -= AppliedDamage;
+	UE_LOG( LogTemp, Warning, TEXT( "Health : %f, " ", %f" ), CurrentHealth, AppliedDamage );
+
+	return 0;
 }
 
 // Called when the game starts or when spawned
@@ -17,6 +31,8 @@ void AShooterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	CurrentHealth = MaxHealth;
+
 	GunSpawn = GetWorld( )->SpawnActor<AGunActor>( GunBPClass );
 	GunSpawn->AttachToComponent( GetMesh( ), FAttachmentTransformRules::KeepRelativeTransform, TEXT( "GunSocket_r" ) );
 
