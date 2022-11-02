@@ -43,6 +43,8 @@ private:
 
 	UPROPERTY( EditDefaultsOnly )
 	float DamageAmount;
+	
+	
 
 public:
 

@@ -30,6 +30,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION( BlueprintPure ) // this will be called in the Blueprint
+	bool IsDead( ) const;
+
 private:
  
 	class AGunActor* GunSpawn;
@@ -42,6 +45,8 @@ private:
 
 	UPROPERTY(EditAnywhere )
 	TSubclassOf<AGunActor> GunBPClass;
+
+	
 
 	float MaxHealth;
 

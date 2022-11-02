@@ -83,6 +83,11 @@ void AShooterCharacter::LookSides( float MoveValue )
 	AddControllerYawInput( MoveValue );
 }
 
+bool AShooterCharacter::IsDead( ) const
+{
+	return CurrentHealth <= 0; 
+}
+
 void AShooterCharacter::PlayerShoot( )
 {
 	GunSpawn->GunShoot( );

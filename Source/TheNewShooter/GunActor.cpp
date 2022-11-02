@@ -5,7 +5,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
-#include "Sound/SoundCue.h"
+#include "Sound/SoundCue.h" 
 
 // Sets default values
 AGunActor::AGunActor() :
@@ -23,7 +23,6 @@ AGunActor::AGunActor() :
 void AGunActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame 
