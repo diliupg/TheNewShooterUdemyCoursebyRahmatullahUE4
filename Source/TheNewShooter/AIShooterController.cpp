@@ -8,6 +8,30 @@ void AAIShooterController::BeginPlay( )
 {
 	Super::BeginPlay( );
 
+	if ( AIBehaviorTree != nullptr )
+	{
+		RunBehaviorTree( AIBehaviorTree );
+	}
+
+}
+
+void AAIShooterController::Tick( float DeltaSeconds )
+{
+	Super::Tick( DeltaSeconds );
+
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn( GetWorld( ), 0 );
-	SetFocus( PlayerPawn ); 
+
+	bool LineOfSight = LineOfSightTo( PlayerPawn );
+	if ( LineOfSight )
+	{
+		SetFocus( PlayerPawn );
+		MoveToActor( PlayerPawn, 300.f );
+	}
+	else
+
+	{
+		ClearFocus(EAIFocusPriority::Gameplay );
+		StopMovement( );
+	}
+	
 }

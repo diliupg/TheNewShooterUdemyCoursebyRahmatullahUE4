@@ -35,7 +35,7 @@ public:
 
 private:
  
-	class AGunActor* GunSpawn;
+	class AGunActor* SpawnedGun;
 
 	// Axis Map Functions
 	void MoveForward( float MoveValue );

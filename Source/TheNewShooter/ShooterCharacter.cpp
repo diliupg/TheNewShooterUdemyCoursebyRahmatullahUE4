@@ -33,16 +33,22 @@ void AShooterCharacter::BeginPlay()
 	
 	CurrentHealth = MaxHealth;
 
-	GunSpawn = GetWorld( )->SpawnActor<AGunActor>( GunBPClass );
-	GunSpawn->AttachToComponent( GetMesh( ), FAttachmentTransformRules::KeepRelativeTransform, TEXT( "GunSocket_r" ) );
+	SpawnedGun = GetWorld( )->SpawnActor<AGunActor>( GunBPClass );
+	SpawnedGun->AttachToComponent( GetMesh( ), FAttachmentTransformRules::KeepRelativeTransform, TEXT( "GunSocket_r" ) );
 
-	GunSpawn->SetOwner( this );
+	SpawnedGun->SetOwner( this );
 }
 
 // Called every frame
 void AShooterCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if ( IsDead() )
+	{
+		Destroy( );
+		SpawnedGun->Destroy( );
+	}
 
 }
 
@@ -90,5 +96,5 @@ bool AShooterCharacter::IsDead( ) const
 
 void AShooterCharacter::PlayerShoot( )
 {
-	GunSpawn->GunShoot( );
+	SpawnedGun->GunShoot( );
 }
