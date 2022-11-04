@@ -17,4 +17,9 @@ class THENEWSHOOTER_API AShooterPlayerController : public APlayerController
 public:
 
 	virtual void GameHasEnded( class AActor* EndGameFocus = nullptr, bool bIsWinner = false ) override;
+
+private:
+	//Widget
+	UPROPERTY(EditAnywhere )
+	TSubclassOf<class UUserWidget> LoserScreenBP;
 };
