@@ -4,6 +4,7 @@
 #include "ShooterCharacter.h"
 #include "GunActor.h"
 #include "Math/UnrealMathUtility.h"
+#include "TheNewShooterGameModeBase.h"
 
 // Sets default values
 AShooterCharacter::AShooterCharacter() :
@@ -21,8 +22,15 @@ float AShooterCharacter::TakeDamage( float DamageAmount, struct FDamageEvent con
 	AppliedDamage = FMath::Min( CurrentHealth, AppliedDamage );
 
 	CurrentHealth -= AppliedDamage;
-	UE_LOG( LogTemp, Warning, TEXT( "Health : %f, " ", %f" ), CurrentHealth, AppliedDamage );
-
+	if ( IsDead( ) )
+	{
+		ATheNewShooterGameModeBase* GameMode = GetWorld( )->GetAuthGameMode<ATheNewShooterGameModeBase>( );
+		if ( GameMode != nullptr )
+		{
+			GameMode->PawnKilled( this );
+		}
+		
+	}
 	return 0;
 }
 

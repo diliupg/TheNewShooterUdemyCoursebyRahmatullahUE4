@@ -3,3 +3,8 @@
 
 #include "TheNewShooterGameModeBase.h"
 
+
+void ATheNewShooterGameModeBase::PawnKilled( APawn* PawnKiled )
+{
+
+}
