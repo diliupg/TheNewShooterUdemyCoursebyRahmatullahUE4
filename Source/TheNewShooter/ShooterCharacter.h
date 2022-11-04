@@ -33,8 +33,6 @@ public:
 	UFUNCTION( BlueprintPure ) // this will be called in the Blueprint
 	bool IsDead( ) const;
 
-	void ShootGun( );
-
 private:
  
 	class AGunActor* SpawnedGun;
@@ -54,5 +52,5 @@ private:
 
 	float CurrentHealth;
 
-	
+	void PlayerShoot( );
 };
