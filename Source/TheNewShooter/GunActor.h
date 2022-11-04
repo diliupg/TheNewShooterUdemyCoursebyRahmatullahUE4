@@ -38,6 +38,9 @@ private:
 	UPROPERTY(EditAnywhere )
 	class USoundBase* MachineGunFire;
 
+	UPROPERTY( EditAnywhere )
+	class USoundBase* ImpactSound;
+
 	UPROPERTY(EditDefaultsOnly )
 	float EndLocationDistance;
 

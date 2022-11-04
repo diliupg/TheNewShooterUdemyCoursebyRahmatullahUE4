@@ -34,7 +34,7 @@ void AGunActor::Tick(float DeltaTime)
 
 void AGunActor::GunShoot( )
 {
-	UGameplayStatics::SpawnSound2D( GetWorld(), MachineGunFire);
+	UGameplayStatics::SpawnSoundAttached( MachineGunFire, Gun, TEXT( "MuzzleFlash" ) );
 	UGameplayStatics::SpawnEmitterAttached( GunFireEffect, Gun, TEXT( "MuzzleFlash" ) );
 
 	APawn* OwnerPawn = Cast<APawn>( GetOwner( ) );
@@ -62,6 +62,7 @@ void AGunActor::GunShoot( )
 	{
 		FVector ShotDirection = -Rotation.Vector( );
 		UGameplayStatics::SpawnEmitterAtLocation( GetWorld( ), ImpactEffect, Hit.Location, ShotDirection.Rotation( ) );
+		UGameplayStatics::SpawnSoundAtLocation( GetWorld( ), ImpactSound, Hit.Location );
 
 		FPointDamageEvent DamageEvent( DamageAmount, Hit, ShotDirection, nullptr );
 
