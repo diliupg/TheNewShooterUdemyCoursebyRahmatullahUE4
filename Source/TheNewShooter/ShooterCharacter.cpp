@@ -37,6 +37,16 @@ void AShooterCharacter::BeginPlay()
 	SpawnedGun->AttachToComponent( GetMesh( ), FAttachmentTransformRules::KeepRelativeTransform, TEXT( "GunSocket_r" ) );
 
 	SpawnedGun->SetOwner( this );
+
+	APlayerController* ShooterPlayerController = Cast<APlayerController>( Controller );
+	if ( ShooterPlayerController )
+	{
+		if ( ShooterPlayerController->PlayerCameraManager )
+		{
+			ShooterPlayerController->PlayerCameraManager->ViewPitchMin = -45.0; // Use whatever values you want
+			ShooterPlayerController->PlayerCameraManager->ViewPitchMax = 45.0;
+		}
+	}
 }
 
 // Called every frame
