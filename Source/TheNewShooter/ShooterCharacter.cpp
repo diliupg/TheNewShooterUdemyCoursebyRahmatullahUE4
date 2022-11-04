@@ -9,7 +9,9 @@
 // Sets default values
 AShooterCharacter::AShooterCharacter() :
 	MaxHealth(100.f ),
-	CurrentHealth(MaxHealth )
+	CurrentHealth(MaxHealth ),
+	MaxAngle(45.f ),
+	MinAngle(-45.f )
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -25,13 +27,14 @@ float AShooterCharacter::TakeDamage( float DamageAmount, struct FDamageEvent con
 	if ( IsDead( ) )
 	{
 		ATheNewShooterGameModeBase* GameMode = GetWorld( )->GetAuthGameMode<ATheNewShooterGameModeBase>( );
+
 		if ( GameMode != nullptr )
 		{
 			GameMode->PawnKilled( this );
 		}
 		
 	}
-	return 0;
+	return AppliedDamage;
 }
 
 // Called when the game starts or when spawned
@@ -46,13 +49,14 @@ void AShooterCharacter::BeginPlay()
 
 	SpawnedGun->SetOwner( this );
 
+	//Set the Camera Pitch 
 	APlayerController* ShooterPlayerController = Cast<APlayerController>( Controller );
 	if ( ShooterPlayerController )
 	{
 		if ( ShooterPlayerController->PlayerCameraManager )
 		{
-			ShooterPlayerController->PlayerCameraManager->ViewPitchMin = -45.0; // Use whatever values you want
-			ShooterPlayerController->PlayerCameraManager->ViewPitchMax = 45.0;
+			ShooterPlayerController->PlayerCameraManager->ViewPitchMin = -MaxAngle; // Use whatever values you want
+			ShooterPlayerController->PlayerCameraManager->ViewPitchMax = MinAngle;
 		}
 	}
 }

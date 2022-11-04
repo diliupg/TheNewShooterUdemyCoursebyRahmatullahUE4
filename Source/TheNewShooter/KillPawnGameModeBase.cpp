@@ -3,9 +3,14 @@
 
 #include "KillPawnGameModeBase.h"
 
-void AKillPawnGameModeBase::PawnKilled( APawn* PawnKiled )
+void AKillPawnGameModeBase::PawnKilled( APawn* PawnKilled )
 {
-	Super::PawnKilled( PawnKiled );
+	Super::PawnKilled( PawnKilled );
 
-	UE_LOG(LogTemp, Warning, TEXT("Enemy killed:") )
+	APlayerController* PlayerController = Cast<APlayerController>( PawnKilled->GetController( ) );
+
+	if ( PlayerController != nullptr )
+	{
+		PlayerController->GameHasEnded( nullptr, false );
+	}
 }

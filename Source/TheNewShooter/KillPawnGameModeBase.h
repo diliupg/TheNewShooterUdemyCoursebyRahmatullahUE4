@@ -16,5 +16,5 @@ class THENEWSHOOTER_API AKillPawnGameModeBase : public ATheNewShooterGameModeBas
 	
 public:
 
-	virtual void PawnKilled( APawn* PawnKiled ) override;
+	virtual void PawnKilled( APawn* PawnKilled ) override;
 };

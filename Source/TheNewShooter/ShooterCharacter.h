@@ -51,4 +51,8 @@ private:
 	float MaxHealth;
 
 	float CurrentHealth;
+
+	float MaxAngle;
+	float MinAngle;
+
 };
