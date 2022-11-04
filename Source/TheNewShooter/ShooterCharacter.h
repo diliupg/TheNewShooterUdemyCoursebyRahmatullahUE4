@@ -33,6 +33,8 @@ public:
 	UFUNCTION( BlueprintPure ) // this will be called in the Blueprint
 	bool IsDead( ) const;
 
+	void Shoot( );
+
 private:
  
 	class AGunActor* SpawnedGun;
@@ -46,11 +48,7 @@ private:
 	UPROPERTY(EditAnywhere )
 	TSubclassOf<AGunActor> GunBPClass;
 
-	
-
 	float MaxHealth;
 
 	float CurrentHealth;
-
-	void PlayerShoot( );
 };

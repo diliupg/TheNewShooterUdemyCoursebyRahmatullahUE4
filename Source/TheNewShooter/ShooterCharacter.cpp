@@ -75,7 +75,7 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	//Bind Action control
 	PlayerInputComponent->BindAction( TEXT( "Jump" ), EInputEvent::IE_Pressed, this, &ACharacter::Jump );
-	PlayerInputComponent->BindAction( TEXT( "Shoot" ), EInputEvent::IE_Pressed, this, &AShooterCharacter::PlayerShoot );
+	PlayerInputComponent->BindAction( TEXT( "Shoot" ), EInputEvent::IE_Pressed, this, &AShooterCharacter::Shoot );
 }
 
 void AShooterCharacter::MoveForward( float MoveValue )
@@ -104,7 +104,7 @@ bool AShooterCharacter::IsDead( ) const
 	return CurrentHealth <= 0; 
 }
 
-void AShooterCharacter::PlayerShoot( )
+void AShooterCharacter::Shoot( )
 {
 	SpawnedGun->GunShoot( );
 }
