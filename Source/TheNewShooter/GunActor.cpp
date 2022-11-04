@@ -51,7 +51,12 @@ void AGunActor::GunShoot( )
 	FVector EndLocation = Location + Rotation.Vector( ) * EndLocationDistance;
 
 	FHitResult Hit;
-	bool bDone = GetWorld( )->LineTraceSingleByChannel( Hit, Location, EndLocation, ECollisionChannel::ECC_GameTraceChannel1 );
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor( this ); // don't collide with this (gun)
+	Params.AddIgnoredActor( GetOwner( ) ); // don't collide with the gun owner
+
+	bool bDone = GetWorld( )->LineTraceSingleByChannel( Hit, Location, EndLocation, ECollisionChannel::ECC_GameTraceChannel1, Params );
 
 	if ( bDone )
 	{
