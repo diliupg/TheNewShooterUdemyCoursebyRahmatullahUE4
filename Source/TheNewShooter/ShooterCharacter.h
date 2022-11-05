@@ -33,6 +33,9 @@ public:
 	UFUNCTION( BlueprintPure ) // this will be called in the Blueprint
 	bool IsDead( ) const;
 
+	UFUNCTION( BlueprintPure ) // this will be called in the Blueprint
+	float HealthPercentage( ) const;
+
 	void Shoot( );
 
 private:
@@ -52,7 +55,9 @@ private:
 
 	float CurrentHealth;
 
+	UPROPERTY( EditAnywhere )
 	float MaxAngle;
+	UPROPERTY( EditAnywhere )
 	float MinAngle;
 
 };

@@ -8,10 +8,24 @@ void AShooterPlayerController::GameHasEnded( class AActor* EndGameFocus /*= null
 {
 	Super::GameHasEnded( EndGameFocus, bIsWinner );
 
-	UUserWidget* LoserScreen = CreateWidget( this, LoserScreenBP );
+	if ( HUD != nullptr )
+	{
+		HUD->RemoveFromViewport( );
+	}
+	 
+	LoserScreen = CreateWidget( this, LoserScreenBP );
 	if ( LoserScreen != nullptr )
 	{
 		LoserScreen->AddToViewport( );
+	}
+}
+
+void AShooterPlayerController::BeginPlay( )
+{
+	HUD = CreateWidget( this, HUDBP);
+	if ( HUD != nullptr )
+	{
+		HUD->AddToViewport( );
 	}
 }
 
