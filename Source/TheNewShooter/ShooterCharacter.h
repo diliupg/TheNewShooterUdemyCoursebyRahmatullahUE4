@@ -17,8 +17,6 @@ public:
 	// Sets default values for this character's properties
 	AShooterCharacter();
 
-	virtual float TakeDamage( float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser ) override;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -26,6 +24,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual float TakeDamage( float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser ) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -47,6 +47,10 @@ private:
 	void MoveRight( float MoveValue );
 	void LookUp( float MoveValue );
 	void LookSides( float MoveValue );
+	void ZoomIn( );
+	void ZoomOut( );
+	void Walk( );
+	void Run( );
 
 	UPROPERTY(EditAnywhere )
 	TSubclassOf<AGunActor> GunBPClass;
@@ -59,5 +63,12 @@ private:
 	float MaxAngle;
 	UPROPERTY( EditAnywhere )
 	float MinAngle;
+	UPROPERTY( EditAnywhere )
+	float CameraFOVZoom;
+	UPROPERTY( EditAnywhere )
+	float CameraFOVDefault;
+
+	APlayerController* ShooterPlayerController;
+	UCharacterMovementComponent* Player;
 
 };
