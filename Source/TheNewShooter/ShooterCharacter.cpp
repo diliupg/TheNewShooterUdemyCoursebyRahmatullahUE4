@@ -15,17 +15,6 @@ AShooterCharacter::AShooterCharacter() :
 
 }
 
-float AShooterCharacter::TakeDamage( float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser )
-{
-	float AppliedDamage = Super::TakeDamage( DamageAmount, DamageEvent, EventInstigator, DamageCauser );
-	AppliedDamage = FMath::Min( CurrentHealth, AppliedDamage );
-
-	CurrentHealth -= AppliedDamage;
-	UE_LOG( LogTemp, Warning, TEXT( "Health : %f, " ", %f" ), CurrentHealth, AppliedDamage );
-
-	return 0;
-}
-
 // Called when the game starts or when spawned
 void AShooterCharacter::BeginPlay()
 {
@@ -44,6 +33,17 @@ void AShooterCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+float AShooterCharacter::TakeDamage( float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser )
+{
+	float AppliedDamage = Super::TakeDamage( DamageAmount, DamageEvent, EventInstigator, DamageCauser );
+	AppliedDamage = FMath::Min( CurrentHealth, AppliedDamage );
+
+	CurrentHealth -= AppliedDamage;
+	UE_LOG( LogTemp, Warning, TEXT( "Health : %f" ), CurrentHealth );
+
+	return AppliedDamage;
 }
 
 // Called to bind functionality to input

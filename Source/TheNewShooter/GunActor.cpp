@@ -67,7 +67,5 @@ void AGunActor::GunShoot( )
 			HitActor->TakeDamage( DamageAmount, DamageEvent, OwnerController, this );
 		}
 	}
-
-
 }
 
