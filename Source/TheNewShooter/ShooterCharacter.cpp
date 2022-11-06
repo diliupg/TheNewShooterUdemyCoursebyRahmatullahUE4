@@ -4,62 +4,14 @@
 #include "ShooterCharacter.h"
 #include "GunActor.h"
 #include "Math/UnrealMathUtility.h"
-#include "TheNewShooterGameModeBase.h"
-#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 AShooterCharacter::AShooterCharacter() :
 	MaxHealth(100.f ),
-	CurrentHealth(MaxHealth ),
-	MaxAngle(45.f ),
-	MinAngle(-45.f ),
-	CameraFOVZoom(45.f ),
-	CameraFOVDefault(90.f )
+	CurrentHealth(MaxHealth )
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-}
-
-
-// Called when the game starts or when spawned
-void AShooterCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-	
-	CurrentHealth = MaxHealth;
-
-	SpawnedGun = GetWorld( )->SpawnActor<AGunActor>( GunBPClass );
-	SpawnedGun->AttachToComponent( GetMesh( ), FAttachmentTransformRules::KeepRelativeTransform, TEXT( "GunSocket_r" ) );
-
-	SpawnedGun->SetOwner( this );
-
-	//Set the Camera Pitch 
-	ShooterPlayerController = Cast<APlayerController>( Controller );
-
-	Player = GetCharacterMovement( );
-
-	if ( ShooterPlayerController )
-	{
-		if ( ShooterPlayerController->PlayerCameraManager )
-		{
-			ShooterPlayerController->PlayerCameraManager->ViewPitchMin = -MaxAngle; // Use whatever values you want
-			ShooterPlayerController->PlayerCameraManager->ViewPitchMax = MinAngle;
-		}
-	}
-
-}
-
-// Called every frame
-void AShooterCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	if ( IsDead() )
-	{
-		Destroy( );
-		SpawnedGun->Destroy( );
-	}
 
 }
 
@@ -69,19 +21,30 @@ float AShooterCharacter::TakeDamage( float DamageAmount, struct FDamageEvent con
 	AppliedDamage = FMath::Min( CurrentHealth, AppliedDamage );
 
 	CurrentHealth -= AppliedDamage;
-	if ( IsDead( ) )
-	{
-		ATheNewShooterGameModeBase* GameMode = GetWorld( )->GetAuthGameMode<ATheNewShooterGameModeBase>( );
+	UE_LOG( LogTemp, Warning, TEXT( "Health : %f, " ", %f" ), CurrentHealth, AppliedDamage );
 
-		if ( GameMode != nullptr )
-		{
-			GameMode->PawnKilled( this );
-		}
-		
-	}
-	return AppliedDamage;
+	return 0;
 }
 
+// Called when the game starts or when spawned
+void AShooterCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	CurrentHealth = MaxHealth;
+
+	GunSpawn = GetWorld( )->SpawnActor<AGunActor>( GunBPClass );
+	GunSpawn->AttachToComponent( GetMesh( ), FAttachmentTransformRules::KeepRelativeTransform, TEXT( "GunSocket_r" ) );
+
+	GunSpawn->SetOwner( this );
+}
+
+// Called every frame
+void AShooterCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
 
 // Called to bind functionality to input
 void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -96,11 +59,7 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	//Bind Action control
 	PlayerInputComponent->BindAction( TEXT( "Jump" ), EInputEvent::IE_Pressed, this, &ACharacter::Jump );
-	PlayerInputComponent->BindAction( TEXT( "Shoot" ), EInputEvent::IE_Pressed, this, &AShooterCharacter::Shoot );
-	PlayerInputComponent->BindAction( TEXT( "CameraZoom" ), EInputEvent::IE_Pressed, this, &AShooterCharacter::ZoomIn );
-	PlayerInputComponent->BindAction( TEXT( "CameraZoom" ), EInputEvent::IE_Released, this, &AShooterCharacter::ZoomOut );
-	PlayerInputComponent->BindAction( TEXT( "Walk_Run" ), EInputEvent::IE_Pressed, this, &AShooterCharacter::Run );
-	PlayerInputComponent->BindAction( TEXT( "Walk_Run" ), EInputEvent::IE_Released, this, &AShooterCharacter::Walk );
+	PlayerInputComponent->BindAction( TEXT( "Shoot" ), EInputEvent::IE_Pressed, this, &AShooterCharacter::PlayerShoot );
 }
 
 void AShooterCharacter::MoveForward( float MoveValue )
@@ -124,42 +83,7 @@ void AShooterCharacter::LookSides( float MoveValue )
 	AddControllerYawInput( MoveValue );
 }
 
-
-void AShooterCharacter::ZoomIn( )
+void AShooterCharacter::PlayerShoot( )
 {
-	ShooterPlayerController->PlayerCameraManager->SetFOV( CameraFOVZoom );
-}
-
-
-void AShooterCharacter::ZoomOut( )
-{
-	ShooterPlayerController->PlayerCameraManager->SetFOV( CameraFOVDefault );
-}
-
-
-void AShooterCharacter::Walk( )
-{
-	Player->MaxWalkSpeed = 300.f;
-}
-
-
-void AShooterCharacter::Run( )
-{
-	Player->MaxWalkSpeed = 600.f;
-}
-
-bool AShooterCharacter::IsDead( ) const
-{
-	return CurrentHealth <= 0; 
-}
-
-
-float AShooterCharacter::HealthPercentage( ) const
-{
-	return CurrentHealth / MaxHealth; 
-}
-
-void AShooterCharacter::Shoot( )
-{
-	SpawnedGun->GunShoot( );
+	GunSpawn->GunShoot( );
 }

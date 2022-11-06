@@ -5,7 +5,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
-#include "Sound/SoundCue.h" 
+#include "Sound/SoundCue.h"
 
 // Sets default values
 AGunActor::AGunActor() :
@@ -23,6 +23,7 @@ AGunActor::AGunActor() :
 void AGunActor::BeginPlay()
 {
 	Super::BeginPlay();
+	
 }
 
 // Called every frame 
@@ -34,7 +35,7 @@ void AGunActor::Tick(float DeltaTime)
 
 void AGunActor::GunShoot( )
 {
-	UGameplayStatics::SpawnSoundAttached( MachineGunFire, Gun, TEXT( "MuzzleFlash" ) );
+	UGameplayStatics::SpawnSound2D( GetWorld(), MachineGunFire);
 	UGameplayStatics::SpawnEmitterAttached( GunFireEffect, Gun, TEXT( "MuzzleFlash" ) );
 
 	APawn* OwnerPawn = Cast<APawn>( GetOwner( ) );
@@ -51,18 +52,12 @@ void AGunActor::GunShoot( )
 	FVector EndLocation = Location + Rotation.Vector( ) * EndLocationDistance;
 
 	FHitResult Hit;
-
-	FCollisionQueryParams Params;
-	Params.AddIgnoredActor( this ); // don't collide with this (gun)
-	Params.AddIgnoredActor( GetOwner( ) ); // don't collide with the gun owner
-
-	bool bDone = GetWorld( )->LineTraceSingleByChannel( Hit, Location, EndLocation, ECollisionChannel::ECC_GameTraceChannel1, Params );
+	bool bDone = GetWorld( )->LineTraceSingleByChannel( Hit, Location, EndLocation, ECollisionChannel::ECC_GameTraceChannel1 );
 
 	if ( bDone )
 	{
 		FVector ShotDirection = -Rotation.Vector( );
 		UGameplayStatics::SpawnEmitterAtLocation( GetWorld( ), ImpactEffect, Hit.Location, ShotDirection.Rotation( ) );
-		UGameplayStatics::SpawnSoundAtLocation( GetWorld( ), ImpactSound, Hit.Location );
 
 		FPointDamageEvent DamageEvent( DamageAmount, Hit, ShotDirection, nullptr );
 

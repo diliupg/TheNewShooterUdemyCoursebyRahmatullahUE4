@@ -14,7 +14,4 @@ class THENEWSHOOTER_API ATheNewShooterGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
-public:
-
-	virtual void PawnKilled( APawn* PawnKiled );
 };
