@@ -41,7 +41,7 @@ float AShooterCharacter::TakeDamage( float DamageAmount, struct FDamageEvent con
 	AppliedDamage = FMath::Min( CurrentHealth, AppliedDamage );
 
 	CurrentHealth -= AppliedDamage;
-	UE_LOG( LogTemp, Warning, TEXT( "Health : %f" ), CurrentHealth );
+	//UE_LOG( LogTemp, Warning, TEXT( "Health : %f" ), CurrentHealth );
 
 	return AppliedDamage;
 }

@@ -14,4 +14,8 @@ class THENEWSHOOTER_API AAIShooterController : public AAIController
 {
 	GENERATED_BODY()
 	
+protected:
+
+	virtual void BeginPlay( ) override;
+
 };
