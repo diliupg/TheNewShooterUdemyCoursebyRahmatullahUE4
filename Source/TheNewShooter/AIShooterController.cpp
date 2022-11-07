@@ -11,3 +11,11 @@ void AAIShooterController::BeginPlay( )
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn( GetWorld( ), 0 );
 	SetFocus(  PlayerPawn);
 }
+
+void AAIShooterController::Tick( float DeltaSeconds )
+{
+	Super::Tick( DeltaSeconds );
+
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn( GetWorld( ), 0 );
+	MoveToActor( PlayerPawn, 500.f );
+}
