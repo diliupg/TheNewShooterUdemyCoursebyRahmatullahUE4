@@ -30,6 +30,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION( BlueprintPure )
+	bool IsDead( ) const;
+
 private:
  
 	class AGunActor* GunSpawn;
@@ -39,6 +42,8 @@ private:
 	void MoveRight( float MoveValue );
 	void LookUp( float MoveValue );
 	void LookSides( float MoveValue );
+
+	
 
 	UPROPERTY(EditAnywhere )
 	TSubclassOf<AGunActor> GunBPClass;
