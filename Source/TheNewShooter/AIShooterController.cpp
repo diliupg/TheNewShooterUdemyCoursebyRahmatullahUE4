@@ -9,7 +9,7 @@ void AAIShooterController::BeginPlay( )
 	Super::BeginPlay( );
 
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn( GetWorld( ), 0 );
-	SetFocus(  PlayerPawn);
+	
 }
 
 void AAIShooterController::Tick( float DeltaSeconds )
@@ -17,5 +17,20 @@ void AAIShooterController::Tick( float DeltaSeconds )
 	Super::Tick( DeltaSeconds );
 
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn( GetWorld( ), 0 );
-	MoveToActor( PlayerPawn, 500.f );
+
+	bool IsLineOfSightTo = LineOfSightTo( PlayerPawn );
+
+	if ( IsLineOfSightTo )
+	{
+		MoveToActor( PlayerPawn, 500.f );
+		SetFocus( PlayerPawn );
+	}
+	else
+	{
+		ClearFocus( EAIFocusPriority::Gameplay );
+		StopMovement( );
+	}
+		
+	
+	
 }
