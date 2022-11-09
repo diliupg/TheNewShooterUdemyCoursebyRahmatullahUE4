@@ -33,6 +33,8 @@ public:
 	UFUNCTION( BlueprintPure )
 	bool IsDead( ) const;
 
+	bool DestroyTimerSet = false;
+
 private:
  
 	class AGunActor* GunSpawn;
@@ -43,13 +45,19 @@ private:
 	void LookUp( float MoveValue );
 	void LookSides( float MoveValue );
 
-	
+	UPROPERTY( EditAnywhere )
+	class UParticleSystem* DeathEffect;
 
 	UPROPERTY(EditAnywhere )
 	TSubclassOf<AGunActor> GunBPClass;
 
-	float MaxHealth;
+	FTimerHandle DeathTimer;
 
+	UFUNCTION( )
+	void OnTimerEndDestroy();
+
+	float MaxHealth;
+	UPROPERTY(EditAnywhere )
 	float CurrentHealth;
 
 	void PlayerShoot( );

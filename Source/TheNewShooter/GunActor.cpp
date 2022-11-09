@@ -10,7 +10,7 @@
 // Sets default values
 AGunActor::AGunActor() :
 	EndLocationDistance(5000.f ),
-	DamageAmount(10.f )
+	DamageAmount(35.f )
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;

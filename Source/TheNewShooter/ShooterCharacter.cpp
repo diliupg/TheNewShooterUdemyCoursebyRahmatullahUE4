@@ -4,6 +4,9 @@
 #include "ShooterCharacter.h"
 #include "GunActor.h"
 #include "Math/UnrealMathUtility.h"
+#include "Kismet/GameplayStatics.h"
+
+
 
 // Sets default values
 AShooterCharacter::AShooterCharacter() :
@@ -20,6 +23,8 @@ void AShooterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	
+
 	CurrentHealth = MaxHealth;
 
 	GunSpawn = GetWorld( )->SpawnActor<AGunActor>( GunBPClass );
@@ -32,6 +37,14 @@ void AShooterCharacter::BeginPlay()
 void AShooterCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if ( CurrentHealth <= 0 && !DestroyTimerSet )
+	{
+		DestroyTimerSet = true;
+		//UE_LOG( LogTemp, Warning, TEXT( "Health Over!!! DesytroyTimer is SET!" ) );
+		GetWorld( )->GetTimerManager( ).SetTimer( DeathTimer, this, &AShooterCharacter::OnTimerEndDestroy, 4.f, false );
+		//UGameplayStatics::SpawnEmitterAtLocation( GetWorld( ), DeathEffect, GetTransform( ) );
+	}
 
 }
 
@@ -86,10 +99,21 @@ void AShooterCharacter::LookSides( float MoveValue )
 
 bool AShooterCharacter::IsDead( ) const
 {
+	//if ( CurrentHealth <= 0 ) { UE_LOG( LogTemp, Warning, TEXT( "Health Just Got Over!!!" ) ); }
+	
 	return CurrentHealth <= 0;
+}
+
+
+void AShooterCharacter::OnTimerEndDestroy( )
+{
+	Destroy( );
+	GunSpawn->Destroy();
+	//UE_LOG( LogTemp, Warning, TEXT( "Enemy Object Destroyed!!!" ) );
 }
 
 void AShooterCharacter::PlayerShoot( )
 {
 	GunSpawn->GunShoot( );
+	//UE_LOG( LogTemp, Warning, TEXT( "Fired!`" ) );
 }
