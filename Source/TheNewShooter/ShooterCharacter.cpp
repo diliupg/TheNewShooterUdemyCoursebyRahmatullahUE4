@@ -42,8 +42,8 @@ void AShooterCharacter::Tick(float DeltaTime)
 	{
 		DestroyTimerSet = true;
 		//UE_LOG( LogTemp, Warning, TEXT( "Health Over!!! DesytroyTimer is SET!" ) );
-		GetWorld( )->GetTimerManager( ).SetTimer( DeathTimer, this, &AShooterCharacter::OnTimerEndDestroy, 4.f, false );
-		//UGameplayStatics::SpawnEmitterAtLocation( GetWorld( ), DeathEffect, GetTransform( ) );
+		GetWorld( )->GetTimerManager( ).SetTimer( DeathTimer, this, &AShooterCharacter::OnTimerEndDestroy, 2.f, false );
+		UGameplayStatics::SpawnEmitterAtLocation( GetWorld( ), DeathEffect, GetTransform( ) );
 	}
 
 }
