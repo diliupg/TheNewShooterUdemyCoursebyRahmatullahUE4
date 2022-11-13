@@ -59,6 +59,12 @@ private:
 	float MaxHealth;
 	UPROPERTY(EditAnywhere )
 	float CurrentHealth;
+	UPROPERTY( EditAnywhere )
+	float MaxAngle;
+	UPROPERTY( EditAnywhere )
+	float MinAngle;
+
+	APlayerController* ShooterPlayerController;
 
 	void PlayerShoot( );
 };

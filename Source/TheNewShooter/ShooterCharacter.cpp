@@ -11,7 +11,9 @@
 // Sets default values
 AShooterCharacter::AShooterCharacter() :
 	MaxHealth(100.f ),
-	CurrentHealth(MaxHealth )
+	CurrentHealth(MaxHealth ),
+	MaxAngle( -45.f ),
+	MinAngle( 45.f )
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -31,6 +33,18 @@ void AShooterCharacter::BeginPlay()
 	GunSpawn->AttachToComponent( GetMesh( ), FAttachmentTransformRules::KeepRelativeTransform, TEXT( "GunSocket_r" ) );
 
 	GunSpawn->SetOwner( this );
+
+	//Set the Camera Pitch 
+	ShooterPlayerController = Cast<APlayerController>( Controller );
+
+	if ( ShooterPlayerController )
+	{
+		if ( ShooterPlayerController->PlayerCameraManager )
+		{
+			ShooterPlayerController->PlayerCameraManager->ViewPitchMin = MaxAngle; // Use whatever values you want
+			ShooterPlayerController->PlayerCameraManager->ViewPitchMax = MinAngle;
+		}
+	}
 }
 
 // Called every frame
