@@ -55,7 +55,7 @@ void AShooterCharacter::Tick(float DeltaTime)
 	if ( CurrentHealth <= 0 && !DestroyTimerSet )
 	{
 		DestroyTimerSet = true;
-		//UE_LOG( LogTemp, Warning, TEXT( "Health Over!!! DesytroyTimer is SET!" ) );
+
 		GetWorld( )->GetTimerManager( ).SetTimer( DeathTimer, this, &AShooterCharacter::OnTimerEndDestroy, 2.f, false );
 		UGameplayStatics::SpawnEmitterAtLocation( GetWorld( ), DeathEffect, GetTransform( ) );
 	}
@@ -91,7 +91,6 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AShooterCharacter::MoveForward( float MoveValue )
 {
-	//UE_LOG( LogTemp, Warning, TEXT( "Move Forward-Backward: %f" ), MoveValue );
 	AddMovementInput( GetActorForwardVector( ), MoveValue, IsMoveInputIgnored( ) );
 }
 
