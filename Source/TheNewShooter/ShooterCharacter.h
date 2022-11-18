@@ -35,6 +35,8 @@ public:
 
 	bool DestroyTimerSet = false;
 
+	void ShootGun( );
+
 private:
  
 	class AGunActor* GunSpawn;
@@ -66,5 +68,4 @@ private:
 
 	APlayerController* ShooterPlayerController;
 
-	void PlayerShoot( );
 };

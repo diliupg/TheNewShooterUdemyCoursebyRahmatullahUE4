@@ -86,7 +86,7 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	//Bind Action control
 	PlayerInputComponent->BindAction( TEXT( "Jump" ), EInputEvent::IE_Pressed, this, &ACharacter::Jump );
-	PlayerInputComponent->BindAction( TEXT( "Shoot" ), EInputEvent::IE_Pressed, this, &AShooterCharacter::PlayerShoot );
+	PlayerInputComponent->BindAction( TEXT( "Shoot" ), EInputEvent::IE_Pressed, this, &AShooterCharacter::ShootGun );
 }
 
 void AShooterCharacter::MoveForward( float MoveValue )
@@ -125,7 +125,7 @@ void AShooterCharacter::OnTimerEndDestroy( )
 	//UE_LOG( LogTemp, Warning, TEXT( "Enemy Object Destroyed!!!" ) );
 }
 
-void AShooterCharacter::PlayerShoot( )
+void AShooterCharacter::ShootGun( )
 {
 	GunSpawn->GunShoot( );
 	//UE_LOG( LogTemp, Warning, TEXT( "Fired!`" ) );
