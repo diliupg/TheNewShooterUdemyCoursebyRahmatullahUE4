@@ -12,6 +12,9 @@
 UCLASS()
 class THENEWSHOOTER_API ATheNewShooterGameModeBase : public AGameModeBase
 {
-	GENERATED_BODY()
+	GENERATED_BODY( )
+
+public:
+	virtual void PawnKilled( APawn* PawnKilled );
 	
 };

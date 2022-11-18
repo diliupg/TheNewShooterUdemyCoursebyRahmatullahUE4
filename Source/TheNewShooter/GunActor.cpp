@@ -35,7 +35,7 @@ void AGunActor::Tick(float DeltaTime)
 
 void AGunActor::GunShoot( )
 {
-	UGameplayStatics::SpawnSound2D( GetWorld(), MachineGunFire);
+	UGameplayStatics::SpawnSoundAttached( MachineGunFire, Gun, TEXT( "MuzzleFlash" ) ); 
 	UGameplayStatics::SpawnEmitterAttached( GunFireEffect, Gun, TEXT( "MuzzleFlash" ) );
 
 	APawn* OwnerPawn = Cast<APawn>( GetOwner( ) );

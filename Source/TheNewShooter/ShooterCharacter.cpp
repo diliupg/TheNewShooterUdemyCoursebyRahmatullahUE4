@@ -5,6 +5,7 @@
 #include "GunActor.h"
 #include "Math/UnrealMathUtility.h"
 #include "Kismet/GameplayStatics.h"
+#include "TheNewShooterGameModeBase.h"
 
 
 
@@ -70,6 +71,16 @@ float AShooterCharacter::TakeDamage( float DamageAmount, struct FDamageEvent con
 	CurrentHealth -= AppliedDamage;
 	//UE_LOG( LogTemp, Warning, TEXT( "Health : %f" ), CurrentHealth );
 
+	if ( IsDead( ) )
+	{
+		ATheNewShooterGameModeBase* GameMode = GetWorld( )->GetAuthGameMode<ATheNewShooterGameModeBase>( );
+
+		if ( GameMode != nullptr )
+		{
+			GameMode->PawnKilled( this );
+		}
+		
+	}
 	return AppliedDamage;
 }
 
