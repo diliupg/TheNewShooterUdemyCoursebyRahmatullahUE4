@@ -35,7 +35,7 @@ void AGunActor::Tick(float DeltaTime)
 
 void AGunActor::GunShoot( )
 {
-	UGameplayStatics::SpawnSoundAttached( MachineGunFire, Gun, TEXT( "MuzzleFlash" ) ); 
+	UGameplayStatics::SpawnSoundAttached(  GunFireSound, Gun, TEXT( "MuzzleFlash" ) ); 
 	UGameplayStatics::SpawnEmitterAttached( GunFireEffect, Gun, TEXT( "MuzzleFlash" ) );
 
 	APawn* OwnerPawn = Cast<APawn>( GetOwner( ) );
@@ -45,7 +45,7 @@ void AGunActor::GunShoot( )
 	if ( OwnerPawn == nullptr ) { return; }
 
 	FVector Location;
-	FRotator Rotation;
+	FRotator Rotation;  
 
 	OwnerController->GetPlayerViewPoint( Location, Rotation );
 
@@ -63,6 +63,7 @@ void AGunActor::GunShoot( )
 	{
 		FVector ShotDirection = -Rotation.Vector( );
 		UGameplayStatics::SpawnEmitterAtLocation( GetWorld( ), ImpactEffect, Hit.Location, ShotDirection.Rotation( ) );
+		UGameplayStatics::SpawnSoundAtLocation( GetWorld( ), ImpactSound, Hit.Location );
 
 		FPointDamageEvent DamageEvent( DamageAmount, Hit, ShotDirection, nullptr );
 

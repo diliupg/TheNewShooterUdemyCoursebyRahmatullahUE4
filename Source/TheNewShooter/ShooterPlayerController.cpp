@@ -2,10 +2,16 @@
 
 
 #include "ShooterPlayerController.h"
+#include "Blueprint/UserWidget.h"
 
 void AShooterPlayerController::GameHasEnded( class AActor* EndGameFocus /*= nullptr*/, bool bIsWinner /*= false */ )
 {
 	Super::GameHasEnded( EndGameFocus, bIsWinner );
 
-	UE_LOG( LogTemp, Warning, TEXT( "Player has died" ) );
+	UUserWidget* LoserScreen = CreateWidget( this, LoserScreenBP );
+	if ( LoserScreen != nullptr )
+	{
+		LoserScreen->AddToViewport( );
+	}
 }
+ 

@@ -36,7 +36,10 @@ private:
 	class UParticleSystem* ImpactEffect;
 
 	UPROPERTY(EditAnywhere )
-	class USoundBase* MachineGunFire;
+	class USoundBase* GunFireSound;
+
+	UPROPERTY( EditAnywhere )
+	class USoundBase* ImpactSound;
 
 	UPROPERTY(EditDefaultsOnly )
 	float EndLocationDistance;
