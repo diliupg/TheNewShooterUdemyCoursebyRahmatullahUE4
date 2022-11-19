@@ -14,6 +14,10 @@ class THENEWSHOOTER_API AShooterPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+protected:
+	
+	virtual void BeginPlay( ) override;
+
 public:
 
 	virtual void GameHasEnded( class AActor* EndGameFocus = nullptr, bool bIsWinner = false ) override;
@@ -21,5 +25,10 @@ public:
 private:
 
 	UPROPERTY(EditAnywhere )
-	TSubclassOf<UUserWidget> LoserScreenBP; 
+	TSubclassOf<UUserWidget> LoserScreenBP;
+
+	UPROPERTY( EditAnywhere )
+	TSubclassOf<UUserWidget> HUDBP;
+
+	class UUserWidget* HUD;
 };
